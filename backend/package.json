@@ -1,0 +1,11 @@
+{
+  "name": "inotebook-backend",
+  "version": "1.0.0",
+  "description": "This folder is responsible for handling all backend related activity for inotebook project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -20,7 +20,25 @@ router.post(
     if (!result.isEmpty()) {
       return res.status(400).json({ error: result.array() });
     }
-    res.send(req.body);
+    User.create({
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+    })
+      .then((user) => {
+        res.json(user); // success response
+      })
+      .catch((err) => {
+        if (err.code === 11000) {
+          // MongoDB duplicate key error
+          return res.status(400).json({
+            error: "You have entered a duplicate email address",
+            message: err.message,
+          });
+        }
+        console.error(err);
+        res.status(500).json({ error: "Server error", message: err.message });
+      });
   }
 );
 

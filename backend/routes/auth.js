@@ -21,33 +21,23 @@ router.post(
     if (!result.isEmpty()) {
       return res.status(400).json({ error: result.array() });
     }
-    let user = User.findOne({ email: req.body.email });
-    if (user) {
-      res
-        .status(400)
-        .json({ error: "Sorry a user with provided email already present" });
-    }
-    user = await User.create({
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password,
-    });
-    /*
-      .then((user) => {
-        res.json(user); // success response
-      })
-      .catch((err) => {
-        if (err.code === 11000) {
-          // MongoDB duplicate key error
-          return res.status(400).json({
-            error: "You have entered a duplicate email address",
-            message: err.message,
-          });
-        }
-        console.error(err);
-        res.status(500).json({ error: "Server error", message: err.message });
+    try {
+      let user = await User.findOne({ email: req.body.email });
+      if (user) {
+        res
+          .status(400)
+          .json({ error: "Sorry a user with provided email already present" });
+      }
+      user = await User.create({
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password,
       });
-      */
+      res.json({ Status: "SuccessFull" });
+    } catch (error) {
+      console.log(error.message);
+      res.status(500).send("Some error occurred");
+    }
   }
 );
 

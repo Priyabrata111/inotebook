@@ -4,7 +4,7 @@ const User = require("../models/User");
 const { body, validationResult } = require("express-validator");
 
 router.post(
-  "/",
+  "/createuser",
   [
     body("name", "Please Enter a valid name with minimum 3 character").isLength(
       { min: 3 }
@@ -15,16 +15,24 @@ router.post(
       "Please Enter a strong password with minimum length of 5"
     ).isLength({ min: 5 }),
   ],
-  (req, res) => {
+  async (req, res) => {
     const result = validationResult(req);
+    // If there are errors return bad request & logs of errors
     if (!result.isEmpty()) {
       return res.status(400).json({ error: result.array() });
     }
-    User.create({
+    let user = User.findOne({ email: req.body.email });
+    if (user) {
+      res
+        .status(400)
+        .json({ error: "Sorry a user with provided email already present" });
+    }
+    user = await User.create({
       name: req.body.name,
       email: req.body.email,
       password: req.body.password,
-    })
+    });
+    /*
       .then((user) => {
         res.json(user); // success response
       })
@@ -39,6 +47,7 @@ router.post(
         console.error(err);
         res.status(500).json({ error: "Server error", message: err.message });
       });
+      */
   }
 );
 

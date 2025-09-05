@@ -3,6 +3,12 @@ const router = express.Router();
 const User = require("../models/User");
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+
+dotenv.config({ path: "../.env.test.local" });
+
+const JWT_SECRET = process.env.JWT_SECRET;
 
 router.post(
   "/createuser",
@@ -29,14 +35,22 @@ router.post(
           .status(400)
           .json({ error: "Sorry a user with provided email already present" });
       }
-      const salt = bcrypt.salt(10);
-      const secPass = bcrypt.hash(req.body.password, salt);
+      const salt = await bcrypt.genSalt(10);
+      const secPass = await bcrypt.hash(req.body.password, salt);
       user = await User.create({
         name: req.body.name,
         email: req.body.email,
         password: secPass,
       });
-      res.json({ Status: "SuccessFull" });
+
+      const data = {
+        user: {
+          id: user.id,
+        },
+      };
+      const authToken = jwt.sign(data, JWT_SECRET);
+      console.log(authToken);
+      res.json({ authToken });
     } catch (error) {
       console.log(error.message);
       res.status(500).send("Some error occurred");

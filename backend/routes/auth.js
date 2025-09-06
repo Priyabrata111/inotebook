@@ -10,6 +10,7 @@ dotenv.config({ path: "../.env.test.local" });
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
+// ==============  CreateUser  =====================
 router.post(
   "/createuser",
   [
@@ -57,5 +58,8 @@ router.post(
     }
   }
 );
+
+// ================== Authenticate the user =========================
+router.post("/createuser", [], async (req, res) => {});
 
 module.exports = router;

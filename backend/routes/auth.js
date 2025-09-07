@@ -60,6 +60,51 @@ router.post(
 );
 
 // ================== Authenticate the user =========================
-router.post("/createuser", [], async (req, res) => {});
+router.post(
+  "/login",
+  [
+    body("email", "Please Enter a valid Email").isEmail(),
+    body("password", "Please Enter a valid password").isLength({ min: 5 }),
+  ],
+  async (req, res) => {
+    const result = validationResult(req);
+    // If there are errors return bad request & logs of errors
+    if (!result.isEmpty()) {
+      return res.status(400).json({ error: result.array() });
+    }
+
+    const { email, password } = req.body;
+    // console.log("email : " + email);
+    // console.log("Password : " + password);
+
+    try {
+      let user = await User.findOne({ email });
+      //console.log(user);
+      if (!user) {
+        return res
+          .status(400)
+          .json({ error: "Please enter the valid credentials" });
+      }
+      const passwordCompare = await bcrypt.compare(password, user.password);
+      if (!passwordCompare) {
+        return res
+          .status(400)
+          .json({ error: "Please enter a valid credentials" });
+      }
+
+      const data = {
+        user: {
+          id: user.id,
+        },
+      };
+      const authToken = jwt.sign(data, JWT_SECRET);
+      console.log(authToken);
+      res.json({ authToken });
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("Intrernal Server Error");
+    }
+  }
+);
 
 module.exports = router;

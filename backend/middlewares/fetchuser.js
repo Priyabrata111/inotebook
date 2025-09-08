@@ -7,6 +7,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 const fetchuser = (req, res, next) => {
   const token = req.header("auth-token");
+
   if (!token) {
     res.status(401).send({ error: "Please Authenticate with a valid token" });
   }
@@ -19,4 +20,4 @@ const fetchuser = (req, res, next) => {
   }
 };
 
-module.exports = fecthuser;
+module.exports = fetchuser;

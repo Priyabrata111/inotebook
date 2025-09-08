@@ -111,6 +111,22 @@ router.post(
 );
 
 // ============  Verify the user ===============
-//Route 3 : /api/auth/createuser
+//Route 3 : /api/auth/getuser
+router.post(
+  "/getuser",
+  [
+    body("email", "Please Enter a valid Email").isEmail(),
+    body("password", "Please Enter a valid password").exists(),
+  ],
+  async (req, res) => {
+    try {
+    } catch (error) {
+      const userId = "dummy";
+      const user = await User.findById(userId).select("-password");
+      console.error(error.message);
+      res.status(400).send("Intrernal Server Error");
+    }
+  }
+);
 
 module.exports = router;

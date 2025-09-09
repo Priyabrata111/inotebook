@@ -4,7 +4,7 @@ const fetchuser = require("../middlewares/fetchuser");
 const Note = require("../models/Notes");
 
 router.get("/fetchallnotes", fetchuser, async (req, res) => {
-  const note = await Note.find({ user: res.user.id });
+  const note = await Note.find({ user: req.user.id });
 
   res.json({ note });
 });

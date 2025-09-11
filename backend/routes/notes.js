@@ -56,12 +56,12 @@ router.put("/updatenote/:id", fetchuser, async (req, res) => {
     res.status(400).send("Note with provided Id Not found");
   }
 
-  if (note.user.toString() !== req.body.user) {
+  if (note.user.toString() !== req.user.id) {
     res.status(401).send("Unauthorized user trying to access the note");
   }
 
   const updateNote = await Note.findByIdAndUpdate(
-    req.param.id,
+    req.params.id,
     { $set: newNote },
     { new: true }
   );

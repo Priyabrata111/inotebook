@@ -112,7 +112,7 @@ router.post(
 );
 
 // ============  Verify the user ===============
-//Route 3 : /api/auth/getuser
+//Route 3 : "/api/auth/getuser"
 router.post("/getuser", fetchuser, async (req, res) => {
   try {
     const userId = req.user.id;

@@ -68,4 +68,23 @@ router.put("/updatenote/:id", fetchuser, async (req, res) => {
   res.json(updateNote);
 });
 
+//ROUTER 4 : delteNotes : api/notes/deletenote/:id
+router.delete("/deletenote/:id", fetchuser, async (req, res) => {
+  const note = await Note.findById(req.params.id);
+  if (!note) {
+    res.status(400).send("Note with provided Id Not found");
+  }
+
+  if (note.user.toString() !== req.user.id) {
+    res.status(401).send("Unauthorized user trying to access the note");
+  }
+
+  const updateNote = await Note.findByIdAndUpdate(
+    req.params.id,
+    { $set: newNote },
+    { new: true }
+  );
+  res.json(updateNote);
+});
+
 module.exports = router;

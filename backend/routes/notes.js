@@ -50,41 +50,46 @@ router.put("/updatenote/:id", fetchuser, async (req, res) => {
   if (title) newNote.title = title;
   if (description) newNote.description = description;
   if (tag) newNote.tag = tag;
+  try {
+    const note = await Note.findById(req.params.id);
+    if (!note) {
+      res.status(400).send("Note with provided Id Not found");
+    }
 
-  const note = await Note.findById(req.params.id);
-  if (!note) {
-    res.status(400).send("Note with provided Id Not found");
+    if (note.user.toString() !== req.user.id) {
+      res.status(401).send("Unauthorized user trying to access the note");
+    }
+
+    const updateNote = await Note.findByIdAndUpdate(
+      req.params.id,
+      { $set: newNote },
+      { new: true }
+    );
+    res.json(updateNote);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Internal Server Error");
   }
-
-  if (note.user.toString() !== req.user.id) {
-    res.status(401).send("Unauthorized user trying to access the note");
-  }
-
-  const updateNote = await Note.findByIdAndUpdate(
-    req.params.id,
-    { $set: newNote },
-    { new: true }
-  );
-  res.json(updateNote);
 });
 
 //ROUTER 4 : delteNotes : api/notes/deletenote/:id
 router.delete("/deletenote/:id", fetchuser, async (req, res) => {
   const note = await Note.findById(req.params.id);
-  if (!note) {
-    res.status(400).send("Note with provided Id Not found");
-  }
+  try {
+    if (!note) {
+      res.status(400).send("Note with provided Id Not found");
+    }
 
-  if (note.user.toString() !== req.user.id) {
-    res.status(401).send("Unauthorized user trying to access the note");
-  }
+    if (note.user.toString() !== req.user.id) {
+      res.status(401).send("Unauthorized user trying to access the note");
+    }
 
-  const updateNote = await Note.findByIdAndUpdate(
-    req.params.id,
-    { $set: newNote },
-    { new: true }
-  );
-  res.json(updateNote);
+    const deleteNote = await Note.findByIdAndDelete(req.params.id);
+    res.json({ Status: "Successfully Deleted", note: deleteNote });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 module.exports = router;

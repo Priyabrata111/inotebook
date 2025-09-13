@@ -1,10 +1,12 @@
 import "./App.css";
-
+import { BrowserRouter, Routes, Route } from "react-router";
+import NavBar from "./components/NavBar";
 function App() {
   return (
-    <div className="App">
+    <>
+      <NavBar />
       <h1> Hello ! This is iNoteBook App</h1>
-    </div>
+    </>
   );
 }
 

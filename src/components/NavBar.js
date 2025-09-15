@@ -1,12 +1,13 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <a className="navbar-brand" href="#">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light ">
+        <Link className="navbar-brand" to="/">
           Navbar
-        </a>
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -22,27 +23,24 @@ const NavBar = () => {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item active">
-              <a className="nav-link" href="#">
+              <Link className="nav-link" to="/">
                 Home
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
-                Link
-              </a>
+              <Link className="nav-link" to="/About">
+                About
+              </Link>
             </li>
           </ul>
-          <form className="form-inline my-2 my-lg-0 d-flex ml-auto left-m">
+          <form className="d-flex ms-auto my-2 my-lg-0" role="search">
             <input
-              className="form-control mr-sm-2"
+              className="form-control me-2"
               type="search"
               placeholder="Search"
               aria-label="Search"
             />
-            <button
-              className="btn btn-outline-success my-2 my-sm-0"
-              type="submit"
-            >
+            <button className="btn btn-outline-success" type="submit">
               Search
             </button>
           </form>

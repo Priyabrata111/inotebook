@@ -32,7 +32,7 @@ const NavBar = () => {
               </a>
             </li>
           </ul>
-          <form className="form-inline my-2 my-lg-0 d-flex ml-auto justify-content-end">
+          <form className="form-inline my-2 my-lg-0 d-flex ml-auto left-m">
             <input
               className="form-control mr-sm-2"
               type="search"

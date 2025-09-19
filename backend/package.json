@@ -4,6 +4,7 @@
   "description": "This folder is responsible for handling all backend related activity for inotebook project",
   "main": "index.js",
   "scripts": {
+     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

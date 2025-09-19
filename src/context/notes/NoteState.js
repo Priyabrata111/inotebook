@@ -22,14 +22,10 @@ const NoteState = (props) => {
       __v: 0,
     },
   ];
-  const [state, setState] = useState(notesInitial);
-  const update = () => {
-    setTimeout(() => {
-      setState({ name: "Priyabrata Mondal", Organization: "Google" });
-    }, 1000);
-  };
+  const [notes, setNote] = useState(notesInitial);
+
   return (
-    <noteContext.Provider value={{ state, setState }}>
+    <noteContext.Provider value={{ notes, setNote }}>
       {props.children}
     </noteContext.Provider>
   );

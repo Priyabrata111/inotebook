@@ -7,9 +7,15 @@ function Notes() {
   return (
     <div className="container my-3">
       <h2>Your Notes</h2>
-      {notes.map((note) => {
-        return <NoteItem note={note} />;
-      })}
+      <div className="row">
+        {notes.map((note) => {
+          return (
+            <div className="col-md-4">
+              <NoteItem note={note} />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

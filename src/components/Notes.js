@@ -5,17 +5,12 @@ function Notes() {
   const notesContext = useContext(noteContext);
   const { notes, setNote } = notesContext;
   return (
-    <div className="container my-3">
+    <div className="row my-3">
       <h2>Your Notes</h2>
-      <div className="row">
-        {notes.map((note) => {
-          return (
-            <div className="col-md-4">
-              <NoteItem note={note} />
-            </div>
-          );
-        })}
-      </div>
+
+      {notes.map((note) => {
+        return <NoteItem key={note._id} note={note} />;
+      })}
     </div>
   );
 }

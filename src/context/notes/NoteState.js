@@ -121,18 +121,29 @@ const NoteState = (props) => {
       time: "2025-09-19T18:21:49.463Z",
       __v: 0,
     },
-    ,
-    {
-      _id: "1368cd9f3d377389464a608ceb",
-      user: "68c06e72999954548fba6251",
-      title: "Name",
-      description: "My Name is ********",
-      tag: "bck",
-      time: "2025-09-19T18:21:49.463Z",
-      __v: 0,
-    },
   ];
   const [notes, setNote] = useState(notesInitial);
+
+  //Add Notes
+  const addNote = () => {
+    // make an API call to access notes
+    const note = {
+      _id: "1368cd9f3d377389464a608ceb",
+      user: "68c06e72999954548fba6251",
+      title: "Name -> AddNote",
+      description: "My Name is ******** ADDNOTE",
+      tag: "bck -> AddNote",
+      time: "2025-09-19T18:21:49.463Z",
+      __v: 0,
+    };
+    setNote(notes.push_back(note));
+  };
+
+  //Delete Notes
+  const deleteNote = () => {};
+
+  //Edit Notes
+  const editNote = () => {};
 
   return (
     <noteContext.Provider value={{ notes, setNote }}>

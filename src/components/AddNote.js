@@ -7,7 +7,7 @@ function AddNote() {
   const [note, setNote] = useState({ title: "", description: "", tag: "" });
   const handleClick = (e) => {
     e.preventDefault();
-    console.log("handleClicked");
+    // console.log("handleClicked");
     addNote(note.title, note.desc, note.tag);
   };
   const onChange = (e) => {

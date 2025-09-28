@@ -141,7 +141,9 @@ const NoteState = (props) => {
   };
 
   //Delete Notes
-  const deleteNote = () => {};
+  const deleteNote = (id) => {
+    console.log("delete note has beeen called for id : " + id);
+  };
 
   //Edit Notes
   const editNote = () => {};

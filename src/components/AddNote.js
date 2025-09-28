@@ -7,12 +7,11 @@ function AddNote() {
   const [note, setNote] = useState({ title: "", description: "", tag: "" });
   const handleClick = (e) => {
     e.preventDefault();
-    // console.log("handleClicked");
+
     addNote(note.title, note.desc, note.tag);
   };
   const onChange = (e) => {
     setNote({ ...note, [e.target.name]: e.target.value });
-    console.log("on Change Clicked");
   };
 
   return (
@@ -62,7 +61,7 @@ function AddNote() {
             className="btn btn-primary"
             onClick={handleClick}
           >
-            Submit
+            Add Note
           </button>
         </form>
       </div>

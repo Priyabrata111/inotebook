@@ -18,10 +18,11 @@ const NoteState = (props) => {
       },
     });
 
-    const json = await response.json;
-    console.log(json);
+    const json = await response.json();
+    console.log(json.note);
+    setNote(json.note);
   };
-  getNotes();
+
   //Add Notes
   const addNote = async (title, description, tag) => {
     // make an API call to access notes
@@ -81,7 +82,9 @@ const NoteState = (props) => {
   };
 
   return (
-    <noteContext.Provider value={{ notes, addNote, deleteNote, editNote }}>
+    <noteContext.Provider
+      value={{ notes, addNote, deleteNote, editNote, getNotes }}
+    >
       {props.children}
     </noteContext.Provider>
   );

@@ -34,7 +34,6 @@ const NoteState = (props) => {
           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjhjMDZlNzI5OTk5NTQ1NDhmYmE2MjUxIn0sImlhdCI6MTc1NzQ0MTY1MH0.wdt3Z6YoUUDxAtV4zWoTpxuHU1RoyItrRFMqYVekkCs",
       },
       body: JSON.stringify({ title, description, tag }),
-      // …
     });
 
     const note = {

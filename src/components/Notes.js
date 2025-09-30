@@ -8,14 +8,17 @@ function Notes() {
   const ref = useRef(null);
   const [enote, seteNote] = useState({
     etitle: "",
-    edescription: "",
+    edesc: "",
     etag: "",
   });
 
   const handleClick = (e) => {
+    console.log(enote);
     e.preventDefault();
   };
-  const onChange = (e) => {};
+  const onChange = (e) => {
+    seteNote({ ...enote, [e.target.name]: e.target.value });
+  };
   useEffect(() => {
     getNotes();
   }, []);
@@ -24,7 +27,7 @@ function Notes() {
 
     seteNote({
       etitle: currentNote.title,
-      edescription: currentNote.description,
+      edesc: currentNote.description,
       etag: currentNote.tag,
     });
   };
@@ -45,7 +48,7 @@ function Notes() {
         <div
           className="modal fade"
           id="exampleModal"
-          tabindex="-1"
+          tabIndex="-1"
           role="dialog"
           aria-labelledby="exampleModalLabel"
           aria-hidden="true"
@@ -98,7 +101,7 @@ function Notes() {
                         id="edesc"
                         name="edesc"
                         onChange={onChange}
-                        value={enote.edescription}
+                        value={enote.edesc}
                       />
                     </div>
                     <div className="mb-3">
@@ -113,17 +116,10 @@ function Notes() {
                         className="form-control"
                         id="etag"
                         name="etag"
-                        onChange={onChange}
                         value={enote.etag}
+                        onChange={onChange}
                       />
                     </div>
-                    <button
-                      type="submit"
-                      className="btn btn-primary"
-                      onClick={handleClick}
-                    >
-                      Edit Note
-                    </button>
                   </form>
                 </div>
               </div>
@@ -135,7 +131,11 @@ function Notes() {
                 >
                   Close
                 </button>
-                <button type="button" className="btn btn-primary">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={handleClick}
+                >
                   Save Note
                 </button>
               </div>

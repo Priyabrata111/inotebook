@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import noteContext from "../context/notes/noteContext";
 import NoteItem from "./NoteItem";
 import AddNote from "./AddNote";
@@ -6,11 +6,27 @@ function Notes() {
   const notesContext = useContext(noteContext);
   const { notes, setNote, getNotes } = notesContext;
   const ref = useRef(null);
+  const [enote, seteNote] = useState({
+    etitle: "",
+    edescription: "",
+    etag: "",
+  });
+
+  const handleClick = (e) => {
+    e.preventDefault();
+  };
+  const onChange = (e) => {};
   useEffect(() => {
     getNotes();
   }, []);
-  const updateNote = (note) => {
+  const updateNote = (currentNote) => {
     ref.current.click();
+
+    seteNote({
+      etitle: currentNote.title,
+      edescription: currentNote.description,
+      etag: currentNote.tag,
+    });
   };
   return (
     <>
@@ -18,7 +34,7 @@ function Notes() {
       <div>
         <button
           type="button"
-          className="btn btn-primary"
+          className="btn btn-primary d-none"
           data-bs-toggle="modal"
           data-bs-target="#exampleModal"
           ref={ref}
@@ -49,7 +65,68 @@ function Notes() {
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <div className="modal-body">...</div>
+              <div className="modal-body">
+                <div className="container my-3">
+                  <form>
+                    <div className="mb-3">
+                      <label
+                        htmlFor="exampleInputEmail1"
+                        className="form-label"
+                      >
+                        Title
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="etitle"
+                        name="etitle"
+                        aria-describedby="emailHelp"
+                        onChange={onChange}
+                        value={enote.etitle}
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label
+                        htmlFor="exampleInputPassword1"
+                        className="form-label"
+                      >
+                        Description
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="edesc"
+                        name="edesc"
+                        onChange={onChange}
+                        value={enote.edescription}
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label
+                        htmlFor="exampleInputEmail1"
+                        className="form-label"
+                      >
+                        Tag
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="etag"
+                        name="etag"
+                        onChange={onChange}
+                        value={enote.etag}
+                      />
+                    </div>
+                    <button
+                      type="submit"
+                      className="btn btn-primary"
+                      onClick={handleClick}
+                    >
+                      Edit Note
+                    </button>
+                  </form>
+                </div>
+              </div>
               <div className="modal-footer">
                 <button
                   type="button"
@@ -59,7 +136,7 @@ function Notes() {
                   Close
                 </button>
                 <button type="button" className="btn btn-primary">
-                  Save changes
+                  Save Note
                 </button>
               </div>
             </div>

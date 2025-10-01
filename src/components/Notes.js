@@ -90,6 +90,8 @@ function Notes() {
                         aria-describedby="emailHelp"
                         onChange={onChange}
                         value={enote.etitle}
+                        minLength={3}
+                        required
                       />
                     </div>
                     <div className="mb-3">
@@ -106,6 +108,8 @@ function Notes() {
                         name="edesc"
                         onChange={onChange}
                         value={enote.edesc}
+                        minLength={5}
+                        required
                       />
                     </div>
                     <div className="mb-3">
@@ -140,6 +144,7 @@ function Notes() {
                   type="button"
                   className="btn btn-primary"
                   onClick={handleClick}
+                  disabled={enote.etitle.length < 3 || enote.edesc.length < 5}
                 >
                   Save Note
                 </button>

@@ -62,6 +62,7 @@ function AddNote() {
             type="submit"
             className="btn btn-primary"
             onClick={handleClick}
+            disabled={note.title.length < 3 || note.desc.length < 5}
           >
             Add Note
           </button>

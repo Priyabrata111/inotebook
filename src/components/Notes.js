@@ -4,9 +4,11 @@ import NoteItem from "./NoteItem";
 import AddNote from "./AddNote";
 function Notes() {
   const notesContext = useContext(noteContext);
-  const { notes, setNote, getNotes } = notesContext;
+  const { notes, setNote, getNotes, editNote } = notesContext;
   const ref = useRef(null);
+  const refClose = useRef(null);
   const [enote, seteNote] = useState({
+    id: "",
     etitle: "",
     edesc: "",
     etag: "",
@@ -14,7 +16,8 @@ function Notes() {
 
   const handleClick = (e) => {
     console.log(enote);
-    e.preventDefault();
+    editNote(enote.id, enote.etitle, enote.edesc, enote.etag);
+    refClose.current.click();
   };
   const onChange = (e) => {
     seteNote({ ...enote, [e.target.name]: e.target.value });
@@ -26,6 +29,7 @@ function Notes() {
     ref.current.click();
 
     seteNote({
+      id: currentNote._id,
       etitle: currentNote.title,
       edesc: currentNote.description,
       etag: currentNote.tag,
@@ -128,6 +132,7 @@ function Notes() {
                   type="button"
                   className="btn btn-secondary"
                   data-bs-dismiss="modal"
+                  ref={refClose}
                 >
                   Close
                 </button>

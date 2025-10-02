@@ -13,12 +13,11 @@ function AddNote() {
   const onChange = (e) => {
     setNote({ ...note, [e.target.name]: e.target.value });
   };
-  console.log(!note.length);
 
   return (
     <>
       <h2>Please Enter Your Note Here</h2>
-      <div className="container">{!note.length && "No Note to show"}</div>
+
       <div className="container my-3">
         <form>
           <div className="mb-3">
@@ -62,7 +61,12 @@ function AddNote() {
             type="submit"
             className="btn btn-primary"
             onClick={handleClick}
-            disabled={note.title.length < 3 || note.desc.length < 5}
+            disabled={
+              !note.title ||
+              !note.desc ||
+              note.title.length < 3 ||
+              note.desc.length < 5
+            }
           >
             Add Note
           </button>

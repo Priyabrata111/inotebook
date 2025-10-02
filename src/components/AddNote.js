@@ -9,6 +9,8 @@ function AddNote() {
     e.preventDefault();
 
     addNote(note.title, note.desc, note.tag);
+
+    setNote({ title: "", description: "", tag: "" });
   };
   const onChange = (e) => {
     setNote({ ...note, [e.target.name]: e.target.value });
@@ -31,6 +33,7 @@ function AddNote() {
               name="title"
               aria-describedby="emailHelp"
               onChange={onChange}
+              value={note.title}
             />
           </div>
           <div className="mb-3">
@@ -43,6 +46,7 @@ function AddNote() {
               id="desc"
               name="desc"
               onChange={onChange}
+              value={note.desc}
             />
           </div>
           <div className="mb-3">
@@ -55,6 +59,7 @@ function AddNote() {
               id="tag"
               name="tag"
               onChange={onChange}
+              value={note.tag}
             />
           </div>
           <button

@@ -10,7 +10,7 @@ const dotenv = require("dotenv");
 dotenv.config({ path: "../.env.test.local" });
 
 const JWT_SECRET = process.env.JWT_SECRET;
-
+let success = false;
 // ==============  CreateUser  =====================
 //Route 1 : /api/auth/createuser
 
@@ -74,7 +74,7 @@ router.post(
     const result = validationResult(req);
     // If there are errors return bad request & logs of errors
     if (!result.isEmpty()) {
-      return res.status(400).json({ error: result.array() });
+      return res.status(400).json({ success, error: result.array() });
     }
 
     const { email, password } = req.body;
@@ -87,13 +87,13 @@ router.post(
       if (!user) {
         return res
           .status(400)
-          .json({ error: "Please enter the valid credentials" });
+          .json({ success, error: "Please enter the valid credentials" });
       }
       const passwordCompare = await bcrypt.compare(password, user.password);
       if (!passwordCompare) {
         return res
           .status(400)
-          .json({ error: "Please enter a valid credentials" });
+          .json({ success, error: "Please enter a valid credentials" });
       }
 
       const data = {
@@ -102,8 +102,9 @@ router.post(
         },
       };
       const authToken = jwt.sign(data, JWT_SECRET);
-      console.log(authToken);
-      res.json({ authToken });
+      success = true;
+      //console.log(authToken);
+      res.json({ success, authToken });
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Intrernal Server Error");

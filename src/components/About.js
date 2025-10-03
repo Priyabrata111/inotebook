@@ -3,16 +3,9 @@ import noteContext from "../context/notes/noteContext";
 
 function About() {
   const a = useContext(noteContext);
+  const { notes } = a;
 
-  useEffect(() => {
-    a.update();
-  }, [a]);
-
-  return (
-    <div>
-      This is about section for {a.state.name} who is in {a.state.Organization}
-    </div>
-  );
+  return <div>This is about section for dummy</div>;
 }
 
 export default About;

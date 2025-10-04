@@ -25,7 +25,7 @@ const Login = () => {
       localStorage.setItem("token", json.authToken);
       navigate("/");
     } else {
-      alert("Invalid Credentials");
+      alert("Invalid Credentials. Please check it");
     }
   };
   const onChange = (e) => {

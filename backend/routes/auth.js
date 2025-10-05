@@ -10,7 +10,7 @@ const dotenv = require("dotenv");
 dotenv.config({ path: "../.env.test.local" });
 
 const JWT_SECRET = process.env.JWT_SECRET;
-let success = false;
+
 // ==============  CreateUser  =====================
 //Route 1 : /api/auth/createuser
 
@@ -27,17 +27,19 @@ router.post(
     ).isLength({ min: 5 }),
   ],
   async (req, res) => {
+    let success = false;
     const result = validationResult(req);
     // If there are errors return bad request & logs of errors
     if (!result.isEmpty()) {
-      return res.status(400).json({ error: result.array() });
+      return res.status(400).json({ success, error: result.array() });
     }
     try {
       let user = await User.findOne({ email: req.body.email });
       if (user) {
-        res
-          .status(400)
-          .json({ error: "Sorry a user with provided email already present" });
+        res.status(400).json({
+          success,
+          error: "Sorry a user with provided email already present",
+        });
       }
       const salt = await bcrypt.genSalt(10);
       const secPass = await bcrypt.hash(req.body.password, salt);
@@ -46,6 +48,7 @@ router.post(
         email: req.body.email,
         password: secPass,
       });
+      success = true;
 
       const data = {
         user: {
@@ -53,8 +56,8 @@ router.post(
         },
       };
       const authToken = jwt.sign(data, JWT_SECRET);
-      console.log(authToken);
-      res.json({ authToken });
+      //console.log(authToken);
+      res.json({ success, authToken });
     } catch (error) {
       console.log(error.message);
       res.status(500).send("Some error occurred");
@@ -71,6 +74,7 @@ router.post(
     body("password", "Please Enter a valid password").isLength({ min: 5 }),
   ],
   async (req, res) => {
+    let success = false;
     const result = validationResult(req);
     // If there are errors return bad request & logs of errors
     if (!result.isEmpty()) {

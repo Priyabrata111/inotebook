@@ -1,14 +1,16 @@
 import React, { useContext, useState } from "react";
 import noteContext from "../context/notes/noteContext";
 
-function AddNote() {
+function AddNote(props) {
   const context = useContext(noteContext);
+  const { showAlert } = props;
   const { addNote } = context;
   const [note, setNote] = useState({ title: "", description: "", tag: "" });
   const handleClick = (e) => {
     e.preventDefault();
 
     addNote(note.title, note.desc, note.tag);
+    showAlert("Note Added Successfully", "success");
 
     setNote({ title: "", description: "", tag: "" });
   };
@@ -37,7 +39,7 @@ function AddNote() {
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="exampleInputPassword1" className="form-label">
+            <label htmlFor="desc" className="form-label">
               Description
             </label>
             <input

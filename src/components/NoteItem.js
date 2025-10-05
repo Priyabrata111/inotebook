@@ -5,6 +5,7 @@ function NoteItem(props) {
   const { note, updateNote } = props;
   const notesContext = useContext(noteContext);
   const { deleteNote } = notesContext;
+  const { showAlert } = props;
   return (
     <div className="col-md-3">
       <div className="card my-3">
@@ -22,6 +23,7 @@ function NoteItem(props) {
             className="fa-solid fa-trash mx-2"
             onClick={() => {
               deleteNote(note._id);
+              showAlert("Note Deleted Successfully", "success");
             }}
           ></i>
         </div>

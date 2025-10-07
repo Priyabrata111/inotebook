@@ -2,12 +2,15 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import noteContext from "../context/notes/noteContext";
 import NoteItem from "./NoteItem";
 import AddNote from "./AddNote";
+import { useNavigate } from "react-router-dom";
+
 function Notes(props) {
   const { showAlert } = props;
   const notesContext = useContext(noteContext);
   const { notes, setNote, getNotes, editNote } = notesContext;
   const ref = useRef(null);
   const refClose = useRef(null);
+  const navigate = useNavigate();
   const [enote, seteNote] = useState({
     id: "",
     etitle: "",
@@ -25,7 +28,11 @@ function Notes(props) {
     seteNote({ ...enote, [e.target.name]: e.target.value });
   };
   useEffect(() => {
-    getNotes();
+    if (localStorage.getItem("token")) {
+      getNotes();
+    } else {
+      navigate("/login");
+    }
   }, []);
   const updateNote = (currentNote) => {
     ref.current.click();

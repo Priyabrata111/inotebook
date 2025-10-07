@@ -60,13 +60,13 @@ const NavBar = () => {
             </form>
           ) : (
             <form className="d-flex ms-auto my-2 my-lg-0" role="search">
-              <Link
+              <button
                 className="btn btn-primary mx-2"
                 role="button"
                 onClick={clickLogout}
               >
                 Logout
-              </Link>
+              </button>
             </form>
           )}
         </div>
